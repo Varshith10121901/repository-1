@@ -30,6 +30,19 @@ knowledge_base = {
     "capital": ["what is the capital of", "capital of", "city of"],
     "joke": ["tell me a joke", "joke", "make me laugh", "funny story"],
     "map": ["show me a map of", "map of", "where is", "location of"],
+    "movies"["suggest me movies","movies", "web series","horror movies" "movie"],
+    "varshith"["who is varshith","who varshith","varshith"],
+    "Earth": "Earth is the third planet from the Sun and the only known place in the universe to support life.",
+    "Sun": ["The Sun is a star at the center of the Solar System and provides energy to Earth."],
+    "Moon":[ "The Moon is Earth's only natural satellite and affects tides on our planet."],
+    "Gravity":[ "Gravity is the force that attracts objects toward the center of the Earth or any other massive body."],
+    "Water": ["Water is a chemical substance (H2O) that is essential for all forms of life."],
+    "Human Brain": ["The human brain is the central organ of the nervous system, responsible for thought and memory."],
+    "Photosynthesis":[ "Photosynthesis is the process by which green plants use sunlight to synthesize nutrients from carbon dioxide and water."],
+    "Atoms": ["Atoms are the basic building blocks of matter, consisting of protons, neutrons, and electrons."],
+    "Electricity":[ "Electricity is the flow of electric charge, used to power devices and machines."],
+    "Internet": "[The Internet is a global network connecting millions of computers for communication and information sharing."],
+    "Programming":[ "Programming is the process of designing and writing code that a computer can execute."],
     "default": ["I'm sorry, I don't understand.", "Could you please rephrase that?", "I'm still learning.", "Can you provide more details?", "I don't have that information."],
 }
 
@@ -44,6 +57,8 @@ responses = {
     },
     "joke": [],  # Jokes will be added dynamically
     "map": ["Opening map..."],
+    "movies"["avatar","inception","breaking bad","interstellar","game of thrones"], 
+    "varshith"["varshith is chutya","he is chutya","chutya","lowde"],
     "default": ["I'm sorry, I don't understand.", "Could you please rephrase that?", "I'm still learning.", "Can you provide more details?", "I don't have that information."],
 }
 
