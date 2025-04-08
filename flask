@@ -9,3 +9,8 @@ py -3 -m venv .venv
 .venv\Scripts\activate
 
 pip install Flask
+
+
+
+
+https://www.digitalocean.com/community/tutorials/how-to-make-a-web-application-using-flask-in-python-3
