@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Analyzer - Gemini AI Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .header {
+            background: linear-gradient(135deg, #6f42c1, #007bff);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: none;
+            padding: 20px;
+        }
+        .result-card {
+            display: none;
+        }
+        .image-preview {
+            max-height: 300px;
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .history-item {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .history-item:hover {
+            background-color: #f0f0f0;
+        }
+        #loadingIndicator {
+            display: none;
+        }
+        footer {
+            background-color: #343a40;
+            color: rgba(255,255,255,0.8);
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Gemini AI Hub</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/image-analyzer">Image Analyzer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/chat">AI Chat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/code-generator">Code Generator</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="header text-center">
+        <div class="container">
+            <h1>Image Analyzer</h1>
+            <p class="lead">Upload an image to get AI-powered analysis using Google's Gemini Vision model</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="row">
+            <!-- Upload Form -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Upload Image</h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="uploadForm">
+                            <div class="mb-3">
+                                <label for="imageFile" class="form-label">Select Image</label>
+                                <input class="form-control" type="file" id="imageFile" accept="image/*" required>
+                                <div class="form-text">Supported formats: JPG, PNG, GIF</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="promptText" class="form-label">Analysis Prompt (optional)</label>
+                                <textarea class="form-control" id="promptText" rows="3" placeholder="Describe what you want to know about this image...">Analyze this image in detail</textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <span class="spinner-border spinner-border-sm d-none" id="loadingSpinner" role="status" aria-hidden="true"></span>
+                                Analyze Image
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Analysis Result -->
+            <div class="col-lg-6">
+                <div class="card result-card" id="resultCard">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h4>Analysis Result</h4>
+                        <button class="btn btn-sm btn-outline-secondary" id="copyButton">Copy</button>
+                    </div>
+                    <div class="card-body">
+                        <img id="previewImage" src="" alt="Uploaded Image" class="image-preview mb-3">
+                        <div id="analysisResult" class="border rounded p-3 bg-light"></div>
+                    </div>
+                </div>
+                
+                <!-- Loading Indicator -->
+                <div id="loadingIndicator" class="text-center my-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Analyzing image with Gemini AI...</p>
+                </div>
+                
+                <!-- Error Alert -->
+                <div class="alert alert-danger mt-3 d-none" id="errorAlert" role="alert">
+                    Error processing image. Please try again.
+                </div>
+            </div>
+        </div>
+        
+        <!-- History Section -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Analysis History</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Image</th>
+                                        <th>Prompt</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="historyTableBody">
+                                    <!-- History items will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="noHistoryMessage" class="text-center text-muted py-3">
+                            No analysis history available yet.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Gemini AI Integration Hub</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2025 Gemini AI Hub. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadForm = document.getElementById('uploadForm');
+            const resultCard = document.getElementById('resultCard');
+            const previewImage = document.getElementById('previewImage');
+            const analysisResult = document.getElementById('analysisResult');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const errorAlert = document.getElementById('errorAlert');
+            const copyButton = document.getElementById('copyButton');
+            const historyTableBody = document.getElementById('historyTableBody');
+            const noHistoryMessage = document.getElementById('noHistoryMessage');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            
+            // Load history on page load
+            loadImageHistory();
+            
+            // Handle form submission
+            uploadForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                const fileInput = document.getElementById('imageFile');
+                const promptText = document.getElementById('promptText').value;
+                
+                if (!fileInput.files[0]) {
+                    alert('Please select an image to upload');
+                    return;
+                }
+                
+                // Show loading state
+                loadingSpinner.classList.remove('d-none');
+                resultCard.style.display = 'none';
+                loadingIndicator.style.display = 'block';
+                errorAlert.classList.add('d-none');
+                
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+                formData.append('prompt', promptText);
+                
+                // Send API request
+                fetch('/api/analyze-image', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Hide loading indicator
+                    loadingIndicator.style.display = 'none';
+                    loadingSpinner.classList.add('d-none');
+                    
+                    if (data.success) {
+                        // Display result
+                        previewImage.src = `/uploads/${fileInput.files[0].name}`;
+                        analysisResult.innerHTML = formatAnalysisResult(data.result);
+                        resultCard.style.display = 'block';
+                        
+                        // Refresh history
+                        loadImageHistory();
+                    } else {
+                        // Show error
+                        errorAlert.textContent = data.error || 'Error processing image. Please try again.';
+                        errorAlert.classList.remove('d-none');
+                    }
+                })
+                .catch(error => {
+                    loadingIndicator.style.display = 'none';
+                    loadingSpinner.classList.add('d-none');
+                    errorAlert.textContent = 'Network error. Please try again.';
+                    errorAlert.classList.remove('d-none');
+                    console.error('Error:', error);
+                });
+            });
+            
+            // Copy result to clipboard
+            copyButton.addEventListener('click', function() {
+                const textToCopy = analysisResult.innerText;
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    const originalText = copyButton.textContent;
+                    copyButton.textContent = 'Copied!';
+                    setTimeout(() => {
+                        copyButton.textContent = originalText;
+                    }, 2000);
+                });
+            });
+            
+            // Load image analysis history
+            function loadImageHistory() {
+                fetch('/api/image-history')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success && data.history && data.history.length > 0) {
+                            historyTableBody.innerHTML = '';
+                            noHistoryMessage.style.display = 'none';
+                            
+                            data.history.forEach(item => {
+                                const row = document.createElement('tr');
+                                row.className = 'history-item';
+                                
+                                // Extract filename from path
+                                const imagePath = item.image_path;
+                                const fileName = imagePath.split('/').pop();
+                                
+                                row.innerHTML = `
+                                    <td>${item.analysis_date}</td>
+                                    <td><img src="/uploads/${fileName}" width="50" height="50" class="img-thumbnail"></td>
+                                    <td>${truncateText(item.prompt, 50)}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary view-result-btn" 
+                                            data-image="/uploads/${fileName}" 
+                                            data-result="${encodeURIComponent(item.analysis_result)}">
+                                            View
+                                        </button>
+                                    </td>
+                                `;
+                                historyTableBody.appendChild(row);
+                            });
+                            
+                            // Add event listeners to view buttons
+                            document.querySelectorAll('.view-result-btn').forEach(button => {
+                                button.addEventListener('click', function() {
+                                    previewImage.src = this.getAttribute('data-image');
+                                    analysisResult.innerHTML = formatAnalysisResult(decodeURIComponent(this.getAttribute('data-result')));
+                                    resultCard.style.display = 'block';
+                                    
+                                    // Scroll to result
+                                    resultCard.scrollIntoView({ behavior: 'smooth' });
+                                });
+                            });
+                        } else {
+                            historyTableBody.innerHTML = '';
+                            noHistoryMessage.style.display = 'block';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error loading history:', error);
+                    });
+            }
+            
+            // Helper function to format analysis result with markdown-like formatting
+            function formatAnalysisResult(text) {
+                // Replace line breaks with <br> tags
+                let formatted = text.replace(/\n/g, '<br>');
+                
+                // Bold text between ** markers
+                formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                
+                // Italic text between * markers
+                formatted = formatted.replace(/\*(.*?)\*/g, '<em>$1</em>');
+                
+                return formatted;
+            }
+            
+            // Helper function to truncate text
+            function truncateText(text, maxLength) {
+                if (text.length <= maxLength) return text;
+                return text.substring(0, maxLength) + '...';
+            }
+        });
+    </script>
+</body>
+</html>

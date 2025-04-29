@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Chatbot</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #chat-container {
+            width: 400px;
+            height: 500px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow-y: auto;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .#chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .message {
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border-radius: 20px;
+            max-width: 70%;
+        }
+
+        .user-message {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+        }
+
+        .bot-message {
+            background-color: #e6e6e6;
+            align-self: flex-start;
+        }
+
+        #input-area {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        #user-input {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            margin-right: 5px;
+        }
+
+        #send-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="chat-messages"></div>
+        <div id="input-area">
+            <input type="text" id="user-input" placeholder="Type your message...">
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+
+        function appendMessage(sender, message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', sender === 'You' ? 'user-message' : 'bot-message');
+            messageDiv.textContent = message;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function getBotResponse(userMessage) {
+            const responses = {
+        'hello': 'Hey there! How can I help you?',
+        'hi': 'Hello! What can I do for you today?',
+        'how are you?': 'I\'m doing great! Thanks for asking.',
+        'what is your name?': 'I\'m your friendly chatbot.',
+        'tell me a joke': 'Why don\'t scientists trust atoms? Because they make up everything!',
+        'tell me another joke': 'Sure, here\'s one: What do you call a lazy kangaroo? Pouch potato!',
+        'tell me a funny story': 'I would, but they all involve punchlines I can\'t quite process yet. Maybe ask me again later?',
+        'what time is it?': 'I don\'t have access to the current time, but you can check your device!',
+        'what day is it?': 'I can’t retrieve date information, but you can always check your device.',
+        'what is the weather?': 'I\'m not able to provide weather information at the moment.',
+        'who are you?': 'I\'m a chatbot designed to assist with your questions and provide helpful information.',
+        'what can you do?': 'I can answer questions, tell jokes, and have conversations. I\'m still learning, though!',
+        'thank you': 'You\'re welcome! Feel free to ask if you have any more questions.',
+        'thanks': 'No problem! I\'m here to help.',
+        'goodbye': 'Goodbye! Have a great day!',
+        'bye': 'See you later!',
+        'how does this work?': 'I process your messages and try to provide relevant responses. Think of me as a digital assistant!',
+        'what is the meaning of life?': 'That\'s a big question! Many people believe the meaning of life is to find happiness and purpose.',
+        'are you a robot?': 'I\'m a computer program, but I like to think I\'m a friendly one!',
+        'what is the capital of France?': 'The capital of France is Paris.',
+        'what is the capital of japan?': 'The capital of Japan is Tokyo.',
+        'what is the capital of germany?': 'The capital of Germany is Berlin.',
+        'what is the biggest planet?': 'Jupiter is the biggest planet in our solar system.',
+        'what is the smallest planet?': 'Mercury is the smallest planet in our solar system.',
+        'who is yuvaraj?': 'yuvaraj was a chutya.',
+        'default': 'Sorry, I didn\'t catch that. Could you rephrase?'
+            };
+
+            const lowerMessage = userMessage.toLowerCase();
+            return responses[lowerMessage] || responses['default'];
+        }
+
+        function sendMessage() {
+            const message = userInput.value;
+            if (message.trim() === '') return;
+
+            appendMessage('You', message);
+            userInput.value = '';
+
+            setTimeout(() => {
+                const botResponse = getBotResponse(message);
+                appendMessage('Bot', botResponse);
+            }, 500);
+        }
+
+        sendButton.addEventListener('click', sendMessage);
+
+        userInput.addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        appendMessage('Bot', 'Hi! I\'m here to chat. Ask me anything!');
+    </script>
+</body>
+</html>

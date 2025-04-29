@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>School Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #tableList {
+            margin-top: 20px;
+        }
+        .table-item {
+            background-color: #f4f4f4;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>AURA AI</h1>
+    <button id="fetchTables">Fetch Database Tables</button>
+    <div id="tableList"></div>
+
+    <script>
+        document.getElementById('fetchTables').addEventListener('click', async () => {
+            try {
+                const response = await fetch('http://localhost:5000/get_tables');
+                const data = await response.json();
+
+                const tableListDiv = document.getElementById('tableList');
+                tableListDiv.innerHTML = ''; // Clear previous results
+
+                if (data.tables) {
+                    data.tables.forEach(table => {
+                        const tableElement = document.createElement('div');
+                        tableElement.classList.add('table-item');
+                        tableElement.textContent = table;
+                        tableListDiv.appendChild(tableElement);
+                    });
+                } else {
+                    tableListDiv.textContent = 'Error: ' + data.error;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('tableList').textContent = 'Failed to fetch tables';
+            }
+        });
+    </script>
+</body>
+</html>

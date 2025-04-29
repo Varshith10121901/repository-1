@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>my ai chatbot</title>
+    <style>
+        :root {
+            --dark-bg: #1a1a1a;
+            --dark-secondary: #2d2d2d;
+            --dark-border: #444444;
+            --dark-text: #f0f0f0;
+            --dark-accent: #0078d4;
+            --dark-input: #333333;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .privacy-banner {
+            background-color: var(--dark-secondary);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--dark-border);
+        }
+        
+        .privacy-text {
+            font-size: 14px;
+        }
+        
+        .privacy-link {
+            color: var(--dark-accent);
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--dark-border);
+            color: var(--dark-text);
+        }
+        
+        .btn-primary {
+            background-color: var(--dark-accent);
+            color: white;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: flex-end;
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--dark-border);
+        }
+        
+        .signin-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: transparent;
+            color: var(--dark-text);
+            border: 1px solid var(--dark-border);
+            border-radius: 4px;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+        
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 40px;
+            overflow-y: auto;
+        }
+        
+        .welcome-message {
+            font-size: 36px;
+            font-weight: 600;
+            color: var(--dark-text);
+            text-align: center;
+            margin-top: 80px;
+        }
+        
+        .chat-footer {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            background-color: var(--dark-bg);
+            border-top: 1px solid var(--dark-border);
+        }
+        
+        .input-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--dark-input);
+            border-radius: 24px;
+            padding: 8px 16px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        
+        .copilot-icon {
+            width: 28px;
+            height: 28px;
+            margin-right: 10px;
+            background-color: #666;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .plus-icon {
+            margin-left: 4px;
+            margin-right: 12px;
+            color: #999;
+            cursor: pointer;
+        }
+        
+        .chat-input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: var(--dark-text);
+            padding: 8px 0;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .chat-input::placeholder {
+            color: #999;
+        }
+        
+        .mic-button {
+            background: transparent;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <form></form>
+    <div class="privacy-banner">
+        <div class="privacy-text">
+            Do you want to share optional diagnostic data to help improve chatbot products?
+            <a href="#" class="privacy-link">Privacy Statement</a>
+        </div>
+        <div class="button-group">
+            <button class="btn btn-outline">Don't share</button>
+            <button class="btn btn-primary">Share</button>
+        </div>
+    </div>
+
+    <div class="header">
+        <button class="signin-btn">
+            Sign in
+            <svg width="20" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+            </svg>
+        </button>
+    </div>
+
+    <div class="main-content">
+        <div class="welcome-message">
+            Hey, how can I help?
+        </div>
+    </div>
+
+    <div class="chat-footer">
+        <div class="input-container">
+            <div class="copilot-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="12" fill="#0078D4"/>
+                </svg>
+            </div>
+            <div class="plus-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 13H13V19H11V13H5V11H11V5H13V11H19V13Z" fill="currentColor"/>
+                </svg>
+            </div>
+            <input type="text" class="chat-input" placeholder="Ask me anything">
+            <button class="mic-button">
+
+                <script src="copilot22.js" defer></script>
+
+            
+
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 14C13.66 14 15 12.66 15 11V5C15 3.34 13.66 2 12 2C10.34 2 9 3.34 9 5V11C9 12.66 10.34 14 12 14ZM18.5 11C18.5 14.03 16.03 16.5 13 16.5V19H16V21H8V19H11V16.5C7.97 16.5 5.5 14.03 5.5 11H7.5C7.5 12.93 9.07 14.5 11 14.5H13C14.93 14.5 16.5 12.93 16.5 11H18.5Z" fill="currentColor"/>
+                </svg>
+            </button>
+        <buuton2 class="send button"></buuton2>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatInput = document.querySelector('.chat-input');
+            const micButton = document.querySelector('.mic-button');
+            
+            // Focus input when clicking anywhere in the input container
+            document.querySelector('.input-container').addEventListener('click', function() {
+                chatInput.focus();
+            });
+            
+            // Handle message sending (simple example)
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && chatInput.value.trim() !== '') {
+                    console.log('Message sent:', chatInput.value);
+                    // Here you would normally handle the message sending
+                    chatInput.value = '';
+                }
+            });
+            
+            // Handle mic button click
+            micButton.addEventListener('click', function() {
+                console.log('Microphone clicked');
+                // Implement speech recognition logic here
+            });
+        });
+    </script>
+</body>
+</html>

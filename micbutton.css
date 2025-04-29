@@ -1,0 +1,18 @@
+.mic-button {
+    background: transparent;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 8px;
+    transition: color 0.3s ease;
+}
+
+.mic-button.active {
+    color: #0078d4; /* Active color when listening */
+}
+
+.mic-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

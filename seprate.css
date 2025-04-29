@@ -1,0 +1,801 @@
+/* --- Aura Theme Enhanced --- */
+:root {
+    --aura-primary: #a782ff;      /* Main interactive color */
+    --aura-secondary: #eae0ff;    /* Light background/element color */
+    --aura-accent: #7c4dff;       /* Brighter accent, gradients */
+    --aura-dark: #6247aa;         /* Darker purple for text/details */
+    --aura-text: #4a3f6d;         /* Primary text color */
+    --aura-light-text: #ffffff;  /* Text on dark backgrounds */
+    --aura-border: #c8b6ff;       /* Border color */
+    --aura-input: #f5f0ff;       /* Input field background */
+    --aura-gradient-1: #d4c2ff;  /* Light gradient color */
+    --aura-gradient-2: #b69fff;  /* Darker gradient color */
+    --aura-shadow-soft: rgba(124, 77, 255, 0.25); /* Soft glow/shadow */
+    --aura-shadow-medium: rgba(124, 77, 255, 0.4); /* Medium shadow */
+    --aura-shadow-strong: rgba(124, 77, 255, 0.6); /* Stronger glow */
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    /* Ethereal cursor - applied globally */
+    cursor: url('https://cur.cursors-4u.net/symbols/sym-9/sym833.cur'), auto !important;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f5ff; /* Fallback */
+    color: var(--aura-text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #f0e6ff 0%, #e8e0ff 50%, #e0d6ff 100%);
+    position: relative;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Ethereal background texture */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        url('https://i.pinimg.com/originals/b7/5d/b2/b75db24a6e550179f7b7e42457cd56a5.png'),
+        url('https://i.pinimg.com/originals/0d/a6/6c/0da66c6c9e65d395a3282d060cfca1dc.png');
+    background-repeat: no-repeat, no-repeat;
+    background-position:
+        bottom center,
+        top right 10%; /* Adjusted position */
+    background-size:
+        110% 180px, /* Slightly larger */
+        350px 350px; /* Slightly larger */
+    opacity: 0.1; /* Softer */
+    z-index: -2; /* Ensure behind particles */
+    pointer-events: none;
+}
+
+/* --- Cosmic Particles --- */
+.cosmic-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1; /* Behind content, above background */
+    overflow: hidden; /* Contain particles */
+}
+
+.particle {
+    position: absolute;
+    background: var(--aura-light-text);
+    border-radius: 50%;
+    opacity: 0;
+    animation: particle-float 15s infinite linear;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5); /* Subtle glow */
+}
+
+/* Example particle generation (would need JS, but CSS defines animation) */
+/* .particle:nth-child(1) { left: 10%; animation-delay: 0s; width: 2px; height: 2px; } */
+/* .particle:nth-child(2) { left: 30%; animation-delay: 3s; width: 3px; height: 3px; } */
+/* ... add more variations */
+
+@keyframes particle-float {
+    0% {
+        opacity: 0;
+        transform: translateY(100vh) translateX(0);
+    }
+    10%, 90% {
+        opacity: 0.7; /* Slightly less opaque */
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-10vh) translateX(calc(var(--random-x, 0) * 1vw)); /* Random horizontal drift */
+    }
+}
+
+
+/* --- Buttons --- */
+.button-group {
+    display: flex;
+    gap: 15px; /* Slightly more spacing */
+}
+
+.btn {
+    padding: 12px 24px; /* Slightly larger padding */
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid var(--aura-border);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Keep bouncy transition */
+    box-shadow: 0 4px 12px var(--aura-shadow-soft);
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1; /* Ensure content is above potential pseudo-elements */
+}
+
+/* Subtle sparkle effect on hover - refined */
+.btn::before {
+    content: "✧";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    font-size: 24px;
+    color: rgba(255, 255, 255, 0.7);
+    opacity: 0;
+    transition: all 0.5s ease-out;
+    z-index: 0;
+}
+
+.btn:hover::before {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2) rotate(180deg);
+}
+
+.btn:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 20px var(--aura-shadow-medium);
+}
+
+.btn-outline {
+    background-color: rgba(255, 255, 255, 0.85); /* Slightly more opaque */
+    border: 2px solid var(--aura-border);
+    color: var(--aura-accent);
+}
+
+.btn-outline:hover {
+    border-color: var(--aura-accent);
+    background-color: white;
+}
+
+.btn-primary {
+    background: linear-gradient(110deg, var(--aura-accent), #9d80ff); /* Adjusted angle */
+    color: var(--aura-light-text);
+    border-color: transparent; /* Remove border for gradient button */
+}
+
+.btn-primary:hover {
+    background: linear-gradient(110deg, #8c5eff, #a88fff); /* Slightly brighter on hover */
+}
+
+/* --- Header --- */
+.header {
+    display: flex;
+    justify-content: flex-end; /* Buttons remain on the right */
+    align-items: center; /* Vertically center items */
+    padding: 15px 30px; /* Increased padding */
+    border-bottom: 1px solid var(--aura-border); /* Thinner border */
+    background: linear-gradient(to right, rgba(234, 224, 255, 0.9), rgba(214, 198, 255, 0.9)); /* Match body lightness */
+    position: relative;
+    z-index: 10;
+    /* Replaced repeating gradient border with a softer shadow */
+    box-shadow: 0 2px 15px rgba(167, 130, 255, 0.15);
+}
+
+/* Sign-in Button Specifics */
+.signin-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    background: linear-gradient(to right, var(--aura-secondary), #f4eaff); /* Softer gradient */
+    color: var(--aura-accent);
+    border: 2px solid var(--aura-accent);
+    border-radius: 30px;
+    padding: 10px 20px;
+    cursor: pointer;
+    position: absolute; /* Keep positioned */
+    left: 25px;
+    top: 50%;
+    transform: translateY(-50%); /* Center vertically */
+    box-shadow: 0 5px 15px var(--aura-shadow-soft);
+    transition: all 0.3s ease-in-out; /* Smoother transition */
+    font-weight: 700;
+}
+
+.signin-btn:hover {
+    transform: translateY(calc(-50% - 4px)) scale(1.07); /* Combined transform */
+    box-shadow: 0 0 15px var(--aura-accent), 0 0 25px var(--aura-shadow-medium); /* Enhanced glow */
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+    border-color: var(--aura-primary); /* Slightly darker border on hover */
+}
+
+.signin-btn::before,
+.signin-btn::after {
+    content: "⋆｡°✩"; /* Keep stars */
+    color: var(--aura-accent);
+    font-size: 18px;
+    opacity: 0.8;
+    transition: transform 0.3s ease-in-out;
+}
+
+.signin-btn:hover::before {
+    transform: rotate(-15deg);
+}
+.signin-btn:hover::after {
+    transform: rotate(15deg);
+}
+
+/* --- Main Content Area --- */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 40px 50px; /* Adjusted padding */
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Floating background elements - keep subtle */
+.main-content::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        url('https://emoji.discord.st/emojis/5113fe7a-9561-4f47-b1d3-f8164e9b2df5.gif'), /* Star 1 */
+        url('https://emoji.discord.st/emojis/9e8407bc-1cd9-476c-bdc1-617b11a006c8.gif'), /* Star 2 */
+        url('https://emoji.discord.st/emojis/5113fe7a-9561-4f47-b1d3-f8164e9b2df5.gif'); /* Star 3 */
+    background-repeat: no-repeat;
+    background-position:
+        90% 15%,  /* Pos 1 */
+        15% 40%,  /* Pos 2 */
+        80% 75%;  /* Pos 3 */
+    background-size: 35px, 45px, 35px; /* Slightly smaller */
+    pointer-events: none;
+    z-index: 0; /* Behind chat messages */
+    opacity: 0.5; /* More subtle */
+    animation: float-subtle 8s ease-in-out infinite alternate; /* Gentle floating */
+}
+
+@keyframes float-subtle {
+    from { transform: translateY(-5px); }
+    to { transform: translateY(5px); }
+}
+
+
+/* Welcome Message */
+.welcome-message {
+    font-size: clamp(36px, 6vw, 52px); /* Responsive font size */
+    font-weight: 700;
+    font-family: 'Quicksand', sans-serif;
+    color: transparent;
+    background: linear-gradient(60deg, var(--aura-accent), #a88fff, var(--aura-accent), #a88fff); /* Adjusted angle & colors */
+    background-size: 250% 250%; /* Slightly smaller size for faster effect */
+    animation: gradient-shift 4s ease infinite, bounceIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; /* Smoother bounce */
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-align: center;
+    margin-top: clamp(40px, 10vh, 80px); /* Responsive margin */
+    opacity: 0; /* Start hidden for animation */
+    text-shadow: /* Softer text shadow */
+        2px 2px 0px var(--aura-border),
+        4px 4px 8px rgba(167, 130, 255, 0.25);
+    letter-spacing: 1px;
+    position: relative;
+    padding: 10px 0; /* Add some padding */
+}
+
+.welcome-message::before, .welcome-message::after {
+    content: "✧";
+    position: absolute;
+    font-size: clamp(40px, 8vw, 60px); /* Responsive size */
+    color: var(--aura-accent);
+    opacity: 0.6; /* Slightly less opaque */
+    text-shadow: 0 0 15px var(--aura-shadow-medium); /* Add glow */
+    animation: float 3s ease-in-out infinite;
+}
+
+.welcome-message::before {
+    left: 15%; /* Adjust position */
+    top: -35px;
+}
+
+.welcome-message::after {
+    right: 15%; /* Adjust position */
+    top: -25px;
+    animation: float2 3.5s ease-in-out infinite; /* Keep variation */
+}
+
+/* Keyframes (Keep existing ones, adjust timing/easing if needed) */
+@keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes bounceIn { /* Refined bounce */
+    0% {
+        opacity: 0;
+        transform: translateY(-60px) scale(0.7);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(10px) scale(1.05);
+    }
+    80% {
+        transform: translateY(-5px) scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes float {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(8deg); } /* Less extreme */
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes float2 {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(-6deg); } /* Less extreme */
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+
+/* --- Chat Footer & Input --- */
+.chat-footer {
+    padding: 20px 25px; /* Adjusted padding */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, rgba(234, 224, 255, 0.9), rgba(214, 198, 255, 0.9));
+    border-top: 1px solid var(--aura-border); /* Thinner border */
+    position: relative;
+    z-index: 10;
+    /* Replaced repeating gradient border with a softer shadow */
+    box-shadow: 0 -2px 15px rgba(167, 130, 255, 0.15);
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 750px; /* Slightly narrower */
+    background-color: rgba(255, 255, 255, 0.85); /* More opaque */
+    border-radius: 30px;
+    padding: 10px 15px 10px 20px; /* Adjusted padding */
+    box-shadow: 0 5px 15px var(--aura-shadow-soft);
+    border: 2px solid var(--aura-border);
+    position: relative;
+    transition: all 0.3s ease-in-out;
+    backdrop-filter: blur(4px); /* Subtle blur */
+}
+
+.input-container:focus-within {
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px var(--aura-accent), 0 0 25px var(--aura-shadow-medium); /* Stronger glow on focus */
+    background-color: rgba(255, 255, 255, 0.95);
+    border-color: var(--aura-primary);
+}
+
+/* Input field stars */
+.input-container::before, .input-container::after {
+    content: "✧";
+    position: absolute;
+    color: var(--aura-accent);
+    font-size: 18px;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    pointer-events: none; /* Prevent interaction */
+}
+
+.input-container::before {
+    left: -25px;
+    top: 50%;
+    transform: translateY(-50%) scale(0.8);
+}
+
+.input-container::after {
+    right: -25px;
+    top: 50%;
+    transform: translateY(-50%) scale(0.8);
+}
+
+.input-container:focus-within::before,
+.input-container:focus-within::after {
+    opacity: 0.7; /* Visible on focus */
+    transform: translateY(-50%) scale(1);
+}
+
+.chat-input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    color: var(--aura-text);
+    padding: 10px 5px;
+    font-size: 16px;
+    outline: none;
+    font-family: 'Quicksand', sans-serif;
+    letter-spacing: 0.5px;
+    font-weight: 500; /* Slightly bolder */
+}
+
+.chat-input::placeholder {
+    color: var(--aura-dark);
+    opacity: 0.5; /* More subtle placeholder */
+    font-style: italic;
+    font-weight: 400;
+}
+
+/* Mic Button */
+.mic-button {
+    background: transparent;
+    border: none;
+    color: var(--aura-accent);
+    cursor: pointer;
+    font-size: 24px; /* Slightly larger */
+    padding: 8px 12px; /* Adjusted padding */
+    margin-left: 5px; /* Space before send button */
+    border-radius: 50%;
+    transition: all 0.3s ease-in-out;
+}
+
+.mic-button:hover {
+    transform: scale(1.15); /* Clear hover effect */
+    color: var(--aura-primary);
+    background-color: rgba(167, 130, 255, 0.1); /* Subtle background on hover */
+}
+
+.mic-button.active {
+    color: var(--aura-primary); /* Use primary for active state */
+    animation: pulse 1.5s infinite;
+    transform-origin: center;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); filter: drop-shadow(0 0 3px var(--aura-accent)); }
+    50% { transform: scale(1.2); filter: drop-shadow(0 0 10px var(--aura-primary)); }
+    100% { transform: scale(1); filter: drop-shadow(0 0 3px var(--aura-accent)); }
+}
+
+.mic-button.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: scale(1);
+    background-color: transparent;
+}
+
+/* Send Button */
+.send-button {
+    background: linear-gradient(45deg, var(--aura-accent), #9d80ff);
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 22px; /* Adjusted padding */
+    border-radius: 25px;
+    cursor: pointer;
+    margin-left: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px; /* Reduced gap */
+    box-shadow: 0 4px 12px rgba(124, 77, 255, 0.4);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.send-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 18px rgba(124, 77, 255, 0.5);
+}
+
+/* Shimmer effect on hover */
+.send-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -80%; /* Start further left */
+    width: 50%; /* Narrower shimmer */
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-25deg); /* Angle the shimmer */
+    opacity: 0;
+    transition: none; /* Needs hover transition */
+}
+
+.send-button:hover::before {
+    opacity: 1;
+    left: 120%; /* Move across */
+    transition: left 0.6s ease-in-out;
+}
+
+.send-button span { /* Wrap text in span if needed */
+    position: relative;
+    z-index: 1; /* Ensure text is above shimmer */
+}
+
+.send-button::after { /* Keep the sparkle */
+    content: " ✧";
+    font-size: 18px;
+    display: inline-block; /* Allows transform */
+    transition: transform 0.3s ease-in-out;
+}
+
+.send-button:hover::after {
+    transform: rotate(90deg);
+}
+
+/* Aura Mode Button */
+.aura-mode-btn {
+    background: linear-gradient(60deg, #9e7dff, #8463ff, #7c4dff);
+    background-size: 200% 200%;
+    animation: gradient-shift 3.5s ease infinite; /* Slightly slower */
+    box-shadow: 0 0 15px #9e7dff, 0 0 20px #8463ff; /* Softer initial glow */
+    color: #fff;
+    border: 2px solid #b49cff;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    padding: 12px 25px;
+    font-size: 16px; /* Consistent size */
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    letter-spacing: 1px;
+    display: inline-flex; /* Align icon and text */
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+}
+
+.aura-mode-btn:hover {
+    transform: scale(1.06) translateY(-5px); /* Slightly more pronounced */
+    box-shadow: 0 0 25px #9e7dff, 0 0 35px #8463ff, 0 0 45px #9e7dff; /* Stronger glow */
+}
+
+.aura-mode-btn::before { /* Star icon */
+    content: "✧";
+    font-size: 20px;
+    display: block; /* Ensure it takes space */
+}
+
+.aura-mode-btn .icon-swirl { /* Swirl icon - replace ::after */
+    width: 25px;
+    height: 25px;
+    background: url('https://emoji.discord.st/emojis/ea1d53df-2803-4a98-9b5e-6f68d4ab1c93.png') no-repeat center center / contain;
+    opacity: 0.9;
+    transition: transform 0.5s ease-in-out;
+    margin-left: 5px; /* Space after text */
+}
+
+.aura-mode-btn:hover .icon-swirl {
+    transform: rotate(360deg);
+    opacity: 1;
+}
+
+
+/* --- Chatbox & Messages --- */
+.chatbox {
+    display: flex;
+    flex-direction: column;
+    gap: 18px; /* Slightly less gap */
+    padding: 20px 15px; /* Adjusted padding */
+    margin-top: 20px;
+    max-width: 750px; /* Match input container */
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative; /* For mascot positioning */
+}
+
+.message {
+    padding: 14px 18px; /* Slightly smaller padding */
+    border-radius: 18px; /* Slightly less rounded */
+    max-width: 80%; /* Slightly wider max */
+    word-wrap: break-word;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Softer shadow */
+    position: relative;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    animation: message-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    font-size: 15px; /* Slightly smaller text */
+    line-height: 1.5; /* Improve readability */
+}
+
+@keyframes message-pop {
+    0% {
+        opacity: 0;
+        transform: scale(0.85) translateY(8px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.message:hover {
+    transform: scale(1.02) translateY(-2px); /* Subtle lift */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}
+
+/* User Message */
+.user {
+    align-self: flex-end;
+    background: linear-gradient(120deg, var(--aura-accent), #9d80ff); /* Adjusted gradient */
+    color: var(--aura-light-text);
+    border-bottom-right-radius: 5px; /* Keep tail shape */
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+/* User message tail - refined */
+.user::after {
+    content: "";
+    position: absolute;
+    right: -8px; /* Closer to bubble */
+    bottom: 0px;
+    width: 18px; /* Smaller tail */
+    height: 18px;
+    background: linear-gradient(120deg, #9d80ff, #9d80ff); /* Match end color */
+    /* Using clip-path for a cleaner tail shape */
+    clip-path: path('M 0 18 A 10 10 0 0 0 18 18 L 18 0 C 10 8 8 10 0 18 Z');
+    transform: scaleX(-1); /* Flip horizontally */
+    z-index: 0;
+}
+
+
+/* Bot Message */
+.bot {
+    align-self: flex-start;
+    background: linear-gradient(to right, #f5f0ff, var(--aura-light-text)); /* Brighter background */
+    color: var(--aura-text);
+    border-bottom-left-radius: 5px; /* Keep tail shape */
+    border: 1px solid var(--aura-border); /* Thinner border */
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+/* Bot message tail - refined */
+.bot::before {
+    content: "";
+    position: absolute;
+    left: -8px; /* Closer to bubble */
+    bottom: 0px;
+    width: 18px; /* Smaller tail */
+    height: 18px;
+    border: 1px solid var(--aura-border); /* Match border */
+    background: var(--aura-light-text); /* Match end color */
+    /* Using clip-path */
+    clip-path: path('M 0 18 A 10 10 0 0 0 18 18 L 18 0 C 10 8 8 10 0 18 Z');
+    z-index: 0;
+    border-right: none; /* Remove border segment covered by bubble */
+    border-top: none;
+}
+
+/* Bot message sparkle */
+.bot::after {
+    content: "✨";
+    position: absolute;
+    right: 12px;
+    bottom: -5px; /* Slightly adjusted */
+    font-size: 16px;
+    color: var(--aura-accent);
+    opacity: 0.7;
+    transform: rotate(-10deg);
+}
+
+
+/* --- Aura Mascot --- */
+.aura-mascot { /* Use a dedicated class */
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 130px; /* Slightly smaller */
+    height: 130px;
+    background: url('https://i.pinimg.com/originals/37/47/0c/37470cbe4c59c35d781bbad29905cd4b.png') no-repeat center/contain;
+    opacity: 0.85;
+    pointer-events: none;
+    z-index: 100; /* Above chat content */
+    animation: float 3.5s ease-in-out infinite alternate; /* Smoother float */
+    filter: drop-shadow(0 5px 20px var(--aura-shadow-medium)); /* Enhanced glow */
+    transition: transform 0.3s ease-in-out;
+}
+
+.aura-mascot:hover { /* Optional hover effect */
+    transform: scale(1.1) rotate(5deg);
+}
+
+
+/* --- Custom Scrollbar --- */
+::-webkit-scrollbar {
+    width: 10px; /* Slightly thinner */
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--aura-secondary);
+    border-radius: 10px;
+    margin: 5px 0; /* Add margin */
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, var(--aura-primary), var(--aura-accent)); /* Use primary/accent */
+    border-radius: 10px;
+    border: 2px solid var(--aura-secondary); /* Thinner border */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, var(--aura-accent), var(--aura-primary)); /* Flip gradient */
+}
+
+/* Responsive Adjustments (Example) */
+@media (max-width: 768px) {
+    .header {
+        padding: 12px 15px;
+    }
+    .signin-btn {
+        font-size: 14px;
+        padding: 8px 15px;
+        left: 15px;
+    }
+    .main-content {
+        padding: 20px 15px 30px;
+    }
+    .chatbox {
+        padding: 15px 10px;
+    }
+    .message {
+        max-width: 85%;
+        font-size: 14px;
+    }
+    .input-container {
+        max-width: 95%;
+    }
+    .aura-mascot {
+        width: 100px;
+        height: 100px;
+        bottom: 15px;
+        right: 15px;
+    }
+    .welcome-message::before, .welcome-message::after {
+        font-size: 35px; /* Smaller stars on mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .header .button-group {
+        display: none; /* Hide header buttons on very small screens */
+    }
+    .chat-footer {
+        padding: 15px;
+    }
+    .input-container {
+        padding: 8px 10px 8px 15px;
+    }
+    .chat-input {
+        font-size: 15px;
+    }
+    .send-button {
+        padding: 8px 18px;
+        font-size: 15px;
+    }
+    .mic-button {
+        font-size: 22px;
+        padding: 6px 10px;
+    }
+    .aura-mascot {
+        display: none; /* Hide mascot on very small screens */
+    }
+}

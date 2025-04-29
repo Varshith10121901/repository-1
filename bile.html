@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLP Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .chat-container {
+            width: 90%;
+            max-width: 800px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+        }
+        
+        .chat-header {
+            background-color: #4285f4;
+            color: white;
+            padding: 15px;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 20px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+        
+        .user-message {
+            background-color: #e6f2ff;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .bot-message {
+            background-color: #f0f0f0;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        #user-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+        
+        #send-button {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #send-button:hover {
+            background-color: #3367d6;
+        }
+        
+        .response-time {
+            font-size: 12px;
+            color: #666;
+            text-align: right;
+            margin-top: 5px;
+        }
+        
+        .typing-indicator {
+            display: none;
+            padding: 10px 15px;
+            background-color: #f0f0f0;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            width: fit-content;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #888;
+            margin-right: 3px;
+            animation: wave 1.3s linear infinite;
+        }
+        
+        .dot:nth-child(2) {
+            animation-delay: -1.1s;
+        }
+        
+        .dot:nth-child(3) {
+            animation-delay: -0.9s;
+        }
+        
+        @keyframes wave {
+            0%, 60%, 100% { transform: initial; }
+            30% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>NLP Chatbot</h1>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="message bot-message">
+                Hello! I'm your NLP chatbot. How can I help you today?
+            </div>
+            <div class="typing-indicator" id="typing-indicator">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type your message here...">
+            <button id="send-button">➤</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatMessages = document.getElementById('chat-messages');
+            const userInput = document.getElementById('user-input');
+            const sendButton = document.getElementById('send-button');
+            const typingIndicator = document.getElementById('typing-indicator');
+            
+            function sendMessage() {
+                const message = userInput.value.trim();
+                if (message === '') return;
+                
+                // Add user message to chat
+                addMessage(message, 'user');
+                userInput.value = '';
+                
+                // Show typing indicator
+                typingIndicator.style.display = 'block';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Send message to server
+                fetch('/get_response', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Hide typing indicator
+                    typingIndicator.style.display = 'none';
+                    
+                    // Add bot response to chat
+                    addMessage(data.response, 'bot', data.time);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    typingIndicator.style.display = 'none';
+                    addMessage('Sorry, there was an error processing your request.', 'bot');
+                });
+            }
+            
+            function addMessage(text, sender, responseTime = null) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}-message`;
+                
+                // Use innerHTML to render <br> tags from server
+                messageDiv.innerHTML = text;
+                
+                chatMessages.appendChild(messageDiv);
+                
+                if (responseTime && sender === 'bot') {
+                    const timeDiv = document.createElement('div');
+                    timeDiv.className = 'response-time';
+                    timeDiv.textContent = `Response time: ${responseTime.toFixed(2)}s`;
+                    chatMessages.appendChild(timeDiv);
+                }
+                
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Event listeners
+            sendButton.addEventListener('click', sendMessage);
+            
+            userInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            // Focus input on load
+            userInput.focus();
+        });
+    </script>
+</body>
+</html>

@@ -1,9 +1,11 @@
+from flask import Flask, render_template, request, jsonify
 import nltk
 import random
 import string
 import pyjokes
 import webbrowser
 from nltk.stem import WordNetLemmatizer
+from datetime import datetime
 
 # Download NLTK resources
 try:
@@ -14,6 +16,8 @@ except LookupError:
     nltk.download('wordnet')
 
 lemmatizer = WordNetLemmatizer()
+
+app = Flask(__name__)
 
 # Knowledge Base and Responses
 knowledge_base = {
@@ -56,11 +60,12 @@ responses = {
         "Back to the Future", "Indiana Jones", "The Lord of the Rings", "Harry Potter", "The Avengers",
         "Fight Club", "The Silence of the Lambs", "Gladiator", "The Departed", "Interstellar"
     ],
-        "music": ["energetic", "chill", "pop", "rock", "jazz", "classical", "hip-hop", "D:\Playlist 1_SpotiDownloader_com\a thousand years.mp3"],
     "joke": [],  # Jokes will be added dynamically
     "map": ["Opening map..."],
     "gratitude": ["You're welcome!", "Glad I could help!"],
     "apology": ["That's okay!", "No problem at all."],
+    "music": ["energetic", "chill", "pop", "rock", "jazz", "classical", "hip-hop"],
+    
     "default": ["I'm sorry, I don't understand.", "Could you please rephrase that?", "I'm still learning."]
 }
 
@@ -90,8 +95,8 @@ def get_response(user_input):
 
                 elif intent == "map":
                     location = " ".join([word for word in user_input.split() if word.lower() not in knowledge_base['map']])
-                    webbrowser.open(f"https://www.google.com/maps/place/{location}")
-                    return "Opening map..."
+                    # For web app, we'll return instructions instead of opening directly
+                    return f"I would show you a map of {location}. In a complete app, this would open a map."
                 
                 elif intent == "movies":
                     return f"Here's a movie recommendation: {random.choice(responses['movies'])}"
@@ -100,15 +105,23 @@ def get_response(user_input):
     
     return random.choice(responses["default"])
 
-def chatbot():
-    print("Chatbot: Hello! I'm here to chat. Type 'bye' to exit.")
-    while True:
-        user_input = input("You: ")
-        if user_input.lower() == "bye":
-            print("Chatbot: Goodbye!")
-            break
-        response = get_response(user_input)
-        print("Chatbot:", response)
+@app.route('/')
+def home():
+    return render_template('index.html')
 
-if __name__ == "__main__":
-    chatbot()
+@app.route('/get_bot_response', methods=['POST'])
+def bot_response():
+    user_message = request.json['message']
+    response = get_response(user_message)
+    current_time = datetime.now().strftime("%I:%M %p")
+    return jsonify({'response': response, 'time': current_time})
+
+@app.route('/toggle_aura_mode', methods=['POST'])
+def toggle_aura_mode():
+    # This is just a placeholder for state management
+    # In a real app, you might store this in a session or database
+    current_mode = request.json['current_mode']
+    return jsonify({'success': True})
+
+if __name__ == '__main__':
+    app.run(debug=True)

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form with Shifting Button</title>
+    <style>
+        /* ... (Your existing CSS styles) ... */
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1e1e2e;
+            color: #cdd6f4;
+        }
+
+        .login-container {
+            background-color: #313244;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            position: relative;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 24px;
+            color: #cba6f7;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #585b70;
+            border-radius: 4px;
+            background-color: #1e1e2e;
+            color: #cdd6f4;
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #cba6f7;
+        }
+
+        .btn-container {
+            position: relative;
+            height: 44px;
+            margin-top: 30px;
+        }
+
+        #login-btn {
+            position: absolute;
+            padding: 12px 24px;
+            background-color: #cba6f7;
+            color: #1e1e2e;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        #login-btn:hover:not(:disabled) {
+            background-color: #b4befe;
+        }
+
+        #login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .shift-left {
+            left: -50px;
+        }
+
+        .shift-right {
+            right: -50px;
+        }
+
+        .shift-top {
+            top: -50px;
+        }
+
+        .shift-bottom {
+            bottom: -50px;
+        }
+
+        .msg {
+            margin-top: 16px;
+            color: #f38ba8;
+            text-align: center;
+            min-height: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="form" method="POST">
+            <div class="input-group">
+                <label for="uname">Username</label>
+                <input type="text" id="uname" name="username" placeholder="Enter username">
+            </div>
+            <div class="input-group">
+                <label for="pass">Password</label>
+                <input type="password" id="pass" name="password" placeholder="Enter password">
+            </div>
+            <div class="btn-container">
+                <button type="submit" id="login-btn">Login</button>
+            </div>
+        </form>
+        <div class="msg">
+            {% if message %}
+                {{ message }}
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        const uname = document.querySelector('#uname');
+        const pass = document.querySelector('#pass');
+        const btnContainer = document.querySelector('.btn-container');
+        const btn = document.querySelector('#login-btn');
+        const form = document.querySelector('#form');
+        const msg = document.querySelector('.msg');
+
+        btn.disabled = true;
+
+        function validateForm() {
+            if (uname.value.trim() !== '' && pass.value.trim() !== '') {
+                btn.disabled = false;
+                btn.classList.add('shift-left');
+            } else {
+                btn.disabled = true;
+                resetButtonPosition();
+            }
+        }
+
+        function resetButtonPosition() {
+            btn.className = '';
+        }
+
+        function showMsg(message) {
+            msg.textContent = message;
+            setTimeout(() => {
+                msg.textContent = '';
+            }, 3000);
+        }
+
+        function shiftButton() {
+            showMsg("Nice try! The button doesn't want to be clicked yet.");
+
+            const positions = ['shift-left', 'shift-top', 'shift-right', 'shift-bottom'];
+
+            const currentPosition = positions.find(dir => btn.classList.contains(dir));
+            const currentIndex = positions.indexOf(currentPosition);
+            const nextIndex = (currentIndex + 1) % positions.length;
+            const nextPosition = positions[nextIndex];
+
+            positions.forEach(pos => btn.classList.remove(pos));
+            btn.classList.add(nextPosition);
+        }
+
+        function handleLogin() {
+            showMsg("Login successful!");
+            resetButtonPosition();
+            form.reset();
+            btn.disabled = true;
+        }
+
+        uname.addEventListener('input', validateForm);
+        pass.addEventListener('input', validateForm);
+
+        btn.addEventListener('mouseenter', function (e) {
+            if (pass.value.length < 8 && !btn.disabled) {
+                shiftButton();
+            }
+        });
+
+        btn.addEventListener('click', handleLogin);
+    </script>
+</body>
+</html>
