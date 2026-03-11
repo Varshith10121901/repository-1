@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.pyd
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Jupyter Notebooks checkpoints
+.ipynb_checkpoints/
+
+# Secrets & API keys
+*.key
+*.pem
+*apikey*
+*api_key*
+*.secret
+.env.*
+secrets/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Distribution / packaging
+*.whl
+*.egg-info/
+site-packages/
