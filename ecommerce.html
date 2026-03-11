@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopStyle - Premium E-Commerce Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="ecommerce.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="top-bar">
+            <div class="container">
+                <span><i class="fas fa-truck"></i> Free Shipping on Orders Over $50</span>
+                <div class="top-links">
+                    <a href="#"><i class="fas fa-phone"></i> +1 234 567 890</a>
+                    <a href="#"><i class="fas fa-envelope"></i> support@shopstyle.com</a>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar">
+            <div class="container">
+                <a href="#" class="logo">
+                    <i class="fas fa-shopping-bag"></i>
+                    Shop<span>Style</span>
+                </a>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search products...">
+                    <button type="button" id="searchBtn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="nav-icons">
+                    <a href="#" class="nav-icon" id="wishlistBtn">
+                        <i class="fas fa-heart"></i>
+                        <span class="badge" id="wishlistCount">0</span>
+                    </a>
+                    <a href="#" class="nav-icon" id="cartBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="badge" id="cartCount">0</span>
+                    </a>
+                    <a href="#" class="nav-icon" id="userBtn">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <nav class="categories-nav" id="categoriesNav">
+            <div class="container">
+                <ul class="category-list">
+                    <li><a href="#" data-category="all" class="active">All Products</a></li>
+                    <li><a href="#" data-category="electronics">Electronics</a></li>
+                    <li><a href="#" data-category="fashion">Fashion</a></li>
+                    <li><a href="#" data-category="home">Home & Living</a></li>
+                    <li><a href="#" data-category="beauty">Beauty</a></li>
+                    <li><a href="#" data-category="sports">Sports</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-slider">
+            <div class="hero-slide active">
+                <div class="container">
+                    <div class="hero-content">
+                        <span class="hero-tag">New Collection 2025</span>
+                        <h1>Discover Your <span>Perfect Style</span></h1>
+                        <p>Shop the latest trends with up to 50% off on selected items. Premium quality products delivered right to your doorstep.</p>
+                        <div class="hero-btns">
+                            <a href="#products" class="btn btn-primary">Shop Now <i class="fas fa-arrow-right"></i></a>
+                            <a href="#categories" class="btn btn-outline">View Categories</a>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600" alt="Shopping">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-indicators">
+            <span class="indicator active"></span>
+            <span class="indicator"></span>
+            <span class="indicator"></span>
+        </div>
+    </section>
+
+    <!-- Features Strip -->
+    <section class="features-strip">
+        <div class="container">
+            <div class="feature-item">
+                <i class="fas fa-truck"></i>
+                <div>
+                    <h4>Free Shipping</h4>
+                    <p>On orders over $50</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-undo"></i>
+                <div>
+                    <h4>Easy Returns</h4>
+                    <p>30-day return policy</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-headset"></i>
+                <div>
+                    <h4>24/7 Support</h4>
+                    <p>Dedicated support</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-shield-alt"></i>
+                <div>
+                    <h4>Secure Payment</h4>
+                    <p>100% secure checkout</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section" id="categories">
+        <div class="container">
+            <div class="section-header">
+                <h2>Shop by Category</h2>
+                <p>Explore our wide range of product categories</p>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card" data-category="electronics">
+                    <div class="category-image">
+                        <img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?w=400" alt="Electronics">
+                    </div>
+                    <div class="category-overlay">
+                        <h3>Electronics</h3>
+                        <p>250+ Products</p>
+                        <span class="category-btn">Shop Now <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+                <div class="category-card" data-category="fashion">
+                    <div class="category-image">
+                        <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=400" alt="Fashion">
+                    </div>
+                    <div class="category-overlay">
+                        <h3>Fashion</h3>
+                        <p>500+ Products</p>
+                        <span class="category-btn">Shop Now <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+                <div class="category-card" data-category="home">
+                    <div class="category-image">
+                        <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=400" alt="Home & Living">
+                    </div>
+                    <div class="category-overlay">
+                        <h3>Home & Living</h3>
+                        <p>350+ Products</p>
+                        <span class="category-btn">Shop Now <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+                <div class="category-card" data-category="beauty">
+                    <div class="category-image">
+                        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400" alt="Beauty">
+                    </div>
+                    <div class="category-overlay">
+                        <h3>Beauty</h3>
+                        <p>200+ Products</p>
+                        <span class="category-btn">Shop Now <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+                <div class="category-card" data-category="sports">
+                    <div class="category-image">
+                        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400" alt="Sports">
+                    </div>
+                    <div class="category-overlay">
+                        <h3>Sports</h3>
+                        <p>180+ Products</p>
+                        <span class="category-btn">Shop Now <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="products-section" id="products">
+        <div class="container">
+            <div class="section-header">
+                <h2>Featured Products</h2>
+                <p>Discover our best-selling items</p>
+            </div>
+            <div class="products-filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="new">New Arrivals</button>
+                <button class="filter-btn" data-filter="sale">On Sale</button>
+                <button class="filter-btn" data-filter="trending">Trending</button>
+            </div>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded dynamically -->
+            </div>
+            <div class="load-more">
+                <button class="btn btn-outline" id="loadMoreBtn">Load More Products</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Offer Banner -->
+    <section class="special-offer">
+        <div class="container">
+            <div class="offer-content">
+                <span class="offer-tag">Limited Time Offer</span>
+                <h2>Summer Sale Up to <span>70% Off</span></h2>
+                <p>Don't miss out on our biggest sale of the season. Shop now and save big on thousands of products!</p>
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="days">00</span>
+                        <span class="countdown-label">Days</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="hours">00</span>
+                        <span class="countdown-label">Hours</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="minutes">00</span>
+                        <span class="countdown-label">Minutes</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="seconds">00</span>
+                        <span class="countdown-label">Seconds</span>
+                    </div>
+                </div>
+                <a href="#products" class="btn btn-primary">Shop the Sale</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our Customers Say</h2>
+                <p>Read reviews from our satisfied customers</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Amazing quality products and super fast delivery! I've been shopping here for months and never disappointed."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="Customer">
+                        <div>
+                            <h4>Sarah Johnson</h4>
+                            <span>Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"The customer service is exceptional. They helped me find the perfect gift and it arrived beautifully packaged."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="Customer">
+                        <div>
+                            <h4>Michael Chen</h4>
+                            <span>Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p>"Great prices and authentic products. The easy return policy gives me confidence to try new things."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/3.jpg" alt="Customer">
+                        <div>
+                            <h4>Emily Davis</h4>
+                            <span>Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-content">
+                <i class="fas fa-envelope-open-text"></i>
+                <h2>Subscribe to Our Newsletter</h2>
+                <p>Get the latest updates on new products and upcoming sales</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="#" class="footer-logo">
+                        <i class="fas fa-shopping-bag"></i>
+                        Shop<span>Style</span>
+                    </a>
+                    <p>Your one-stop destination for premium quality products at unbeatable prices.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Track Order</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="#">Electronics</a></li>
+                        <li><a href="#">Fashion</a></li>
+                        <li><a href="#">Home & Living</a></li>
+                        <li><a href="#">Beauty</a></li>
+                        <li><a href="#">Sports</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Shopping Street, NY 10001</li>
+                        <li><i class="fas fa-phone"></i> +1 234 567 890</li>
+                        <li><i class="fas fa-envelope"></i> support@shopstyle.com</li>
+                        <li><i class="fas fa-clock"></i> Mon - Fri: 9AM - 6PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="payment-methods">
+                    <span>We Accept:</span>
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-apple-pay"></i>
+                </div>
+                <p>&copy; 2025 ShopStyle. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content cart-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-shopping-cart"></i> Your Shopping Cart</h3>
+                <button class="close-modal" id="closeCartModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="cart-items" id="cartItems">
+                    <!-- Cart items will be loaded here -->
+                </div>
+                <div class="cart-empty" id="cartEmpty">
+                    <i class="fas fa-shopping-cart"></i>
+                    <p>Your cart is empty</p>
+                    <a href="#products" class="btn btn-primary" id="startShoppingBtn">Start Shopping</a>
+                </div>
+            </div>
+            <div class="modal-footer cart-footer" id="cartFooter">
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="cartSubtotal">$0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping:</span>
+                        <span id="cartShipping">Free</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="cartTotal">$0.00</span>
+                    </div>
+                </div>
+                <button class="btn btn-primary checkout-btn" id="checkoutBtn">
+                    Proceed to Checkout <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Quick View Modal -->
+    <div class="modal" id="quickViewModal">
+        <div class="modal-content quickview-modal">
+            <button class="close-modal" id="closeQuickViewModal">&times;</button>
+            <div class="quickview-content" id="quickViewContent">
+                <!-- Quick view content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="ecommerce.js"></script>
+</body>
+</html>
